@@ -58,8 +58,6 @@ jar {
         if (!it.name.startsWith("kotlin")) it.isDirectory() ? it : zipTree(it)
     }
 
-    from configurations.internal.collect { it.isDirectory() ? it : zipTree(it) }
-
     manifest {
         attributes([
                 "Specification-Title"     : module_name,
