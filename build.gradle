@@ -1,0 +1,80 @@
+buildscript {
+    repositories {
+        maven { url 'https://files.minecraftforge.net/maven' }
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.72'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.3.72'
+}
+
+apply(plugin: "net.minecraftforge.gradle")
+
+String packagesToken = new String(package_public_token.decodeBase64())
+
+version = module_version
+group = "com.projectessentials.protect"
+archivesBaseName = module_name
+
+configurations {
+    internal
+    implementation.extendsFrom internal
+}
+
+minecraft {
+    mappings channel: forge_mappings_channel_type, version: forge_mappings_channel_version
+}
+
+repositories {
+    maven {
+        name = package_maven_repo_name
+        url = uri "$package_maven_repo-core"
+        credentials {
+            username = package_maven_repo_mail
+            password = packagesToken
+        }
+    }
+    maven { url 'https://libraries.minecraft.net' }
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:$forge_version"
+    implementation "com.projectessentials.core:ProjectEssentials-Core:$core_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinx_serialization_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-$kotlin_jdk_version_target:$kotlin_version"
+    implementation "com.sk89q.worldedit:worldedit-forge-mc1.14.4:$worldedit_version"
+    internal "org.jetbrains.exposed:exposed-core:$exposed_core_version"
+}
+
+jar {
+    from configurations.internal.collect {
+        if (!it.name.startsWith("kotlin-stdlib-")) it.isDirectory() ? it : zipTree(it)
+    }
+
+    from configurations.internal.collect { it.isDirectory() ? it : zipTree(it) }
+
+    manifest {
+        attributes([
+                "Specification-Title"     : module_name,
+                "Specification-Vendor"    : module_vendor,
+                "Specification-Version"   : module_version,
+                "Implementation-Title"    : module_name,
+                "Implementation-Version"  : module_version,
+                "Implementation-Vendor"   : module_vendor,
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+sourceCompatibility = targetCompatibility =
+        compileJava.sourceCompatibility =
+                compileJava.targetCompatibility = project_jvm_version_target
+
+compileKotlin.kotlinOptions.jvmTarget =
+        compileTestKotlin.kotlinOptions.jvmTarget = project_jvm_version_target
