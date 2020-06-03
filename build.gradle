@@ -39,6 +39,7 @@ repositories {
         }
     }
     maven { url 'https://libraries.minecraft.net' }
+    maven { url 'https://maven.enginehub.org/repo' }
     mavenCentral()
     jcenter()
 }
@@ -54,7 +55,7 @@ dependencies {
 
 jar {
     from configurations.internal.collect {
-        if (!it.name.startsWith("kotlin-stdlib-")) it.isDirectory() ? it : zipTree(it)
+        if (!it.name.startsWith("kotlin")) it.isDirectory() ? it : zipTree(it)
     }
 
     from configurations.internal.collect { it.isDirectory() ? it : zipTree(it) }
