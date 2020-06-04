@@ -51,6 +51,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-$kotlin_jdk_version_target:$kotlin_version"
     implementation "com.sk89q.worldedit:worldedit-forge-mc1.14.4:$worldedit_version"
     internal "org.jetbrains.exposed:exposed-core:$exposed_core_version"
+    testImplementation 'io.kotest:kotest-runner-junit5-jvm:4.0.6'
+    testImplementation 'io.kotest:kotest-assertions-core-jvm:4.0.6'
+    testImplementation 'io.kotest:kotest-property-jvm:4.0.6'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 }
 
 jar {
@@ -69,6 +74,10 @@ jar {
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 sourceCompatibility = targetCompatibility =
