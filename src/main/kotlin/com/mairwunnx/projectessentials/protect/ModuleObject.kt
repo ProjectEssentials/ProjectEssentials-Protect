@@ -7,6 +7,7 @@ import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
 import com.mairwunnx.projectessentials.core.api.v1.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
+import com.mairwunnx.projectessentials.protect.managers.initializeCache
 import com.mairwunnx.projectessentials.protect.managers.initializeDatabase
 import com.sk89q.worldedit.LocalSession
 import com.sk89q.worldedit.WorldEdit
@@ -26,6 +27,7 @@ class ModuleObject : IModule {
 
     override fun init() {
         initializeDatabase()
+        initializeCache()
     }
 
     init {
