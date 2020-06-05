@@ -1,22 +1,22 @@
 package com.mairwunnx.projectessentials.protect.managers
 
 import com.mairwunnx.projectessentials.core.api.v1.helpers.projectConfigDirectory
+import com.mairwunnx.projectessentials.protect.entities.RegionTable
 import net.minecraftforge.fml.server.ServerLifecycleHooks
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.Connection
 
-val dbPath by lazy {
-    val config = projectConfigDirectory.replace("\\", "/")
-    "jdbc:sqlite${config + '/' + ServerLifecycleHooks.getCurrentServer().folderName}/regions.db"
-}
-
 fun initializeDatabase() {
-    Database.connect(dbPath, "org.sqlite.JDBC")
-    TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
-    initializeTable()
-}
-
-private fun initializeTable() {
-
+    Database.connect(
+        "jdbc:sqlite${projectConfigDirectory + '/' + ServerLifecycleHooks.getCurrentServer().folderName}/regions.db",
+        "org.sqlite.JDBC"
+    ).also {
+        TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
+        transaction {
+            SchemaUtils.create(RegionTable)
+        }
+    }
 }
