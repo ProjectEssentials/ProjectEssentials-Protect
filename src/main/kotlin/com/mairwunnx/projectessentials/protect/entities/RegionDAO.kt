@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object RegionTable : IntIdTable() {
-    val name = varchar("name", 16).uniqueIndex().index()
+    val name = varchar("name", 24).index()
     val creator = varchar("creator", 16).default("#server")
     val participants = text("participants").default("[]")
     val flags = text("flags").default("[]")
