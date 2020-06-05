@@ -51,6 +51,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-$kotlin_jdk_version_target:$kotlin_version"
     implementation "com.sk89q.worldedit:worldedit-forge-mc1.14.4:$worldedit_version"
     internal "org.jetbrains.exposed:exposed-core:$exposed_core_version"
+    internal 'org.jetbrains.exposed:exposed-core:0.25.1'
+    internal 'org.jetbrains.exposed:exposed-dao:0.25.1'
+    internal 'org.jetbrains.exposed:exposed-jdbc:0.25.1'
+    internal 'org.xerial:sqlite-jdbc:3.30.1'
     testImplementation 'io.kotest:kotest-runner-junit5-jvm:4.0.6'
     testImplementation 'io.kotest:kotest-assertions-core-jvm:4.0.6'
     testImplementation 'io.kotest:kotest-property-jvm:4.0.6'
