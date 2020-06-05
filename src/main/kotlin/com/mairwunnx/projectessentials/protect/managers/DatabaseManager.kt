@@ -7,11 +7,15 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.io.File
 import java.sql.Connection
 
+private val path by lazy { "jdbc:sqlite:/${projectConfigDirectory + '/' + ServerLifecycleHooks.getCurrentServer().folderName}/regions.db" }
+
 fun initializeDatabase() {
+    File(projectConfigDirectory + File.separator + ServerLifecycleHooks.getCurrentServer().folderName).mkdirs()
     Database.connect(
-        "jdbc:sqlite${projectConfigDirectory + '/' + ServerLifecycleHooks.getCurrentServer().folderName}/regions.db",
+        path,
         "org.sqlite.JDBC"
     ).also {
         TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
