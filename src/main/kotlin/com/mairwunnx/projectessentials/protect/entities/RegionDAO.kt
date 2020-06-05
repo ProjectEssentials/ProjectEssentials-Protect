@@ -23,16 +23,16 @@ object RegionTable : IntIdTable() {
 class RegionEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<RegionEntity>(RegionTable)
 
-    val name by RegionTable.name
-    val creator by RegionTable.creator
-    val participants by RegionTable.participants
-    val flags by RegionTable.flags
-    val priority by RegionTable.priority
-    val dimension by RegionTable.dimension
-    val minX by RegionTable.minX
-    val minY by RegionTable.minY
-    val minZ by RegionTable.minZ
-    val maxX by RegionTable.maxX
-    val maxY by RegionTable.maxY
-    val maxZ by RegionTable.maxZ
+    var name by RegionTable.name
+    var creator by RegionTable.creator
+    var participants by RegionTable.participants
+    var flags by RegionTable.flags
+    var priority by RegionTable.priority
+    var dimension by RegionTable.dimension
+    var minX by RegionTable.minX
+    var minY by RegionTable.minY
+    var minZ by RegionTable.minZ
+    var maxX by RegionTable.maxX
+    var maxY by RegionTable.maxY
+    var maxZ by RegionTable.maxZ
 }
