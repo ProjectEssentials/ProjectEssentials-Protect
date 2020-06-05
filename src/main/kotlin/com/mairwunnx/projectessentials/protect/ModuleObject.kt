@@ -7,10 +7,10 @@ import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
 import com.mairwunnx.projectessentials.core.api.v1.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
+import com.mairwunnx.projectessentials.protect.managers.initializeDatabase
 import com.sk89q.worldedit.LocalSession
 import com.sk89q.worldedit.WorldEdit
 import com.sk89q.worldedit.math.BlockVector3
-import com.sk89q.worldedit.regions.CylinderRegion
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.event.CommandEvent
 import net.minecraftforge.event.world.BlockEvent
@@ -23,7 +23,10 @@ class ModuleObject : IModule {
     override val name = this::class.java.`package`.implementationTitle.split(" ").last()
     override val version = this::class.java.`package`.implementationVersion!!
     override val loadIndex = 11
-    override fun init() = Unit
+
+    override fun init() {
+        initializeDatabase()
+    }
 
     init {
         EVENT_BUS.register(this)
@@ -74,7 +77,6 @@ class ModuleObject : IModule {
             min, max
         ).also { event.isCanceled = it }
     }
-
 
 
     private fun test(session: LocalSession) {
