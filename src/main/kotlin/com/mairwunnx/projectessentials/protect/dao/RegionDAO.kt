@@ -1,7 +1,7 @@
 package com.mairwunnx.projectessentials.protect.dao
 
+import org.jetbrains.exposed.dao.ImmutableCachedEntityClass
 import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
@@ -21,7 +21,7 @@ object RegionTable : IntIdTable() {
 }
 
 class RegionEntity(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<RegionEntity>(RegionTable)
+    companion object : ImmutableCachedEntityClass<Int, RegionEntity>(RegionTable)
 
     var name by RegionTable.name
     var creator by RegionTable.creator
