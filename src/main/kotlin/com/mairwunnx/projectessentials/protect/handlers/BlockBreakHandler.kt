@@ -21,7 +21,7 @@ object BlockBreakHandler : ActivityHandler {
         if (event.player !is ServerPlayerEntity) return
         val player = event.player as ServerPlayerEntity
         if (hasPermission(player, "ess.protect.bypass", 4)) return
-        with(event.pos) { getLastRegionAtPos(x, y, z, event.player.currentDimensionId) }.also {
+        with(event.pos) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }.also {
             if (
                 it != null && it.creator != player.name.string &&
                 player.name.string !in participantsAsMap(it.participants).keys &&
