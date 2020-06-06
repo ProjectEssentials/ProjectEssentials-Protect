@@ -1,4 +1,4 @@
-package com.mairwunnx.projectessentials.protect.entities
+package com.mairwunnx.projectessentials.protect.dao
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
