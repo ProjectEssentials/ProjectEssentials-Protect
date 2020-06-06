@@ -10,13 +10,13 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
 import java.sql.Connection
 
-private fun path() =
-    "jdbc:sqlite:/${projectConfigDirectory + '/' + ServerLifecycleHooks.getCurrentServer().folderName}/regions.db"
-
 fun initializeDatabase() {
-    File(projectConfigDirectory + File.separator + ServerLifecycleHooks.getCurrentServer().folderName).mkdirs()
-    Database.connect(path(), "org.sqlite.JDBC").also {
+    File(path()).mkdir()
+    Database.connect("jdbc:sqlite:/${path()}/regions.db", "org.sqlite.JDBC").also {
         TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
         transaction { SchemaUtils.create(RegionTable) }
     }
 }
+
+private fun path() =
+    projectConfigDirectory + File.separator + ServerLifecycleHooks.getCurrentServer().folderName
