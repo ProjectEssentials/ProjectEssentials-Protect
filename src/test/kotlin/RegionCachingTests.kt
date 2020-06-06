@@ -1,5 +1,5 @@
-import com.mairwunnx.projectessentials.protect.entities.RegionEntity
-import com.mairwunnx.projectessentials.protect.entities.RegionTable
+import com.mairwunnx.projectessentials.protect.dao.RegionEntity
+import com.mairwunnx.projectessentials.protect.dao.RegionTable
 import com.soywiz.kds.CacheMap
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
