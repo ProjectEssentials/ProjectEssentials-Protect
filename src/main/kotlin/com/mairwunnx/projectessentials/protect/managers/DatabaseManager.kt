@@ -2,7 +2,7 @@ package com.mairwunnx.projectessentials.protect.managers
 
 import com.mairwunnx.projectessentials.core.api.v1.helpers.projectConfigDirectory
 import com.mairwunnx.projectessentials.protect.dao.RegionTable
-import net.minecraftforge.fml.server.ServerLifecycleHooks
+import net.minecraftforge.fml.server.ServerLifecycleHooks.getCurrentServer
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.TransactionManager
@@ -18,5 +18,4 @@ fun initializeDatabase() {
     }
 }
 
-private fun path() =
-    projectConfigDirectory + File.separator + ServerLifecycleHooks.getCurrentServer().folderName
+private fun path() = projectConfigDirectory + File.separator + getCurrentServer().folderName
