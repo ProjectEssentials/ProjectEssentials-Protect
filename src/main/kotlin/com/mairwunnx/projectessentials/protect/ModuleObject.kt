@@ -7,6 +7,9 @@ import com.mairwunnx.projectessentials.core.api.v1.extensions.getPlayer
 import com.mairwunnx.projectessentials.core.api.v1.extensions.isPlayerSender
 import com.mairwunnx.projectessentials.core.api.v1.module.IModule
 import com.mairwunnx.projectessentials.core.api.v1.providers.ProviderAPI
+import com.mairwunnx.projectessentials.protect.handlers.ActivityHandler
+import com.mairwunnx.projectessentials.protect.handlers.BlockBreakHandler
+import com.mairwunnx.projectessentials.protect.handlers.activityHandlers
 import com.mairwunnx.projectessentials.protect.managers.initializeCache
 import com.mairwunnx.projectessentials.protect.managers.initializeDatabase
 import com.sk89q.worldedit.LocalSession
@@ -26,8 +29,7 @@ class ModuleObject : IModule {
     override val loadIndex = 11
 
     override fun init() {
-        initializeDatabase()
-        initializeCache()
+        activityHandlers.forEach(ActivityHandler::init).also { initializeDatabase() }
     }
 
     init {
@@ -44,6 +46,13 @@ class ModuleObject : IModule {
 //        LocalizationAPI.apply(this.javaClass) {
 //            mutableListOf()
 //        }
+    }
+
+    @SubscribeEvent
+    public fun onBlockBreak(event: BlockEvent.BreakEvent) {
+        BlockVector3.at(event.pos.x, event.pos.y, event.pos.z).containedWithin(
+            min, max
+        ).also { event.isCanceled = it }
     }
 
     @SubscribeEvent
@@ -72,13 +81,6 @@ class ModuleObject : IModule {
     lateinit var max: BlockVector3
     lateinit var min: BlockVector3
     val logger = LogManager.getLogger()
-
-    @SubscribeEvent
-    public fun onBlockBreak(event: BlockEvent.BreakEvent) {
-        BlockVector3.at(event.pos.x, event.pos.y, event.pos.z).containedWithin(
-            min, max
-        ).also { event.isCanceled = it }
-    }
 
 
     private fun test(session: LocalSession) {
