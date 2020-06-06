@@ -1,5 +1,6 @@
 package com.mairwunnx.projectessentials.protect.configurations
 
 data class ProtectConfigurationModel(
-    var regionCacheSize: Int = 64
+    var regionNamesCacheSize: Int = 128,
+    var regionPositionsCacheSize: Int = 64
 )
