@@ -20,11 +20,6 @@ fun invalidateCache() = logger.warn("Invalidating cache of regions").also {
     regionNameCache.clear().also { regionPositionsCache.clear() }
 }
 
-private fun validateSize(size: Int) = when {
-    size < 1 -> logger.error("Cache size can't be lower than 1!").let { 32 }
-    else -> size
-}
-
 fun cache(region: () -> RegionEntity) = cache(region())
 
 fun cache(region: RegionEntity) {
@@ -34,4 +29,9 @@ fun cache(region: RegionEntity) {
             regionPositionsCache.put(RegionPositions(minX, minY, minZ, maxX, maxY, maxZ), this)
         }
     }
+}
+
+private fun validateSize(size: Int) = when {
+    size < 1 -> logger.error("Cache size can't be lower than 1!").let { 32 }
+    else -> size
 }
