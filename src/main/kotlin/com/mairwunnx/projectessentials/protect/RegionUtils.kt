@@ -1,7 +1,7 @@
 package com.mairwunnx.projectessentials.protect
 
 import com.mairwunnx.projectessentials.core.api.v1.extensions.empty
-import net.minecraft.dispenser.Position
+import com.mairwunnx.projectessentials.protect.structs.Position
 
 /**
  * @return true if regions intersect, or outer object positions
