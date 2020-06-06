@@ -8,8 +8,8 @@ import org.apache.logging.log4j.LogManager
 
 private val logger = LogManager.getLogger()
 
-private var regionNameCache = CacheMap<String, RegionEntity>(64)
-private var regionPositionsCache = CacheMap<RegionPositions, RegionEntity>(32)
+internal var regionNameCache = CacheMap<String, RegionEntity>(64)
+internal var regionPositionsCache = CacheMap<RegionPositions, RegionEntity>(32)
 
 fun initializeCache() = logger.debug("Initializing cache of regions").also {
     regionNameCache = CacheMap(validateSize(configuration.take().regionNamesCacheSize))
