@@ -4,5 +4,6 @@ val activityHandlers = listOf(
     BlockBreakHandler,
     BlockPlaceHandler,
     BlockInteractHandler,
-    EntityInteractHandler
+    EntityInteractHandler,
+    EntitySpawnHandler
 )
