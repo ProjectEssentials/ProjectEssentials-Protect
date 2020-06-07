@@ -29,6 +29,7 @@ data class ProtectConfigurationModel(
         var restrictFlowEffect: Boolean = false,
         var restrictMobGrief: Boolean = false,
         var restrictDamage: Boolean = false,
-        var restrictFarmlandDamage: Boolean = false
+        var restrictFarmlandDamage: Boolean = false,
+        var restrictBucketUsing: Boolean = false
     )
 }
