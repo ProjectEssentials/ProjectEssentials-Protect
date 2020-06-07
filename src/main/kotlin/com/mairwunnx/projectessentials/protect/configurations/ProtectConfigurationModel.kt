@@ -17,6 +17,7 @@ data class ProtectConfigurationModel(
         var handleFarmlandDamage: Boolean = true,
         var handleBucketUsing: Boolean = true,
         var handleExplosions: Boolean = true,
+        var handleFlowEffects: Boolean = true,
         val defaultRegionFlags: Set<String> = setOf()
     )
 
