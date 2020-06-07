@@ -11,7 +11,8 @@ data class ProtectConfigurationModel(
         var handleBlockPlace: Boolean = true,
         var handleBlockInteract: Boolean = true,
         var handleEntityInteract: Boolean = true,
-        var handleEntityInteractProjectile: Boolean = true
+        var handleEntityInteractProjectile: Boolean = true,
+        var handleEntitySpawn: Boolean = true
     )
 
     data class BlockInteractSettings(
