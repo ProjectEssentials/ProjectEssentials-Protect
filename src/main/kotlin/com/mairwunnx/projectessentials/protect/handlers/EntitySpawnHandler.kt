@@ -18,21 +18,19 @@ object EntitySpawnHandler : ActivityHandler {
         if (!configuration.take().generalSettings.handleEntitySpawn) return
         with(event) {
             getLastRegionAtPos(x.toInt(), y.toInt(), z.toInt(), entity.dimension.id)
-        }.also {
-            if (it != null) {
-                val regionFlags = getRegionFlags(it)
-                if (FLAG_RESTRICT_ENTITY_SPAWN in regionFlags) {
-                    { event.isCanceled = true }.let { return }
-                } else {
-                    with(event.entity.type.classification) {
-                        if (peacefulCreature || animal) {
-                            if (FLAG_RESTRICT_KIND_ENTITY_SPAWN in regionFlags) {
-                                { event.isCanceled = true }.let { return }
-                            }
-                        } else {
-                            if (FLAG_RESTRICT_UNKIND_ENTITY_SPAWN in regionFlags) {
-                                { event.isCanceled = true }.let { return }
-                            }
+        }?.also {
+            val flags = getRegionFlags(it)
+            if (FLAG_RESTRICT_ENTITY_SPAWN in flags) {
+                { event.isCanceled = true }.let { return }
+            } else {
+                with(event.entity.type.classification) {
+                    if (peacefulCreature || animal) {
+                        if (FLAG_RESTRICT_KIND_ENTITY_SPAWN in flags) {
+                            { event.isCanceled = true }.let { return }
+                        }
+                    } else {
+                        if (FLAG_RESTRICT_UNKIND_ENTITY_SPAWN in flags) {
+                            { event.isCanceled = true }.let { return }
                         }
                     }
                 }
