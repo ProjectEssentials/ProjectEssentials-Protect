@@ -12,6 +12,5 @@ const val FLAG_RESTRICT_MOD_GRIEF = "restrict-mob-grief"
 const val FLAG_RESTRICT_DAMAGE = "restrict-damage"
 const val FLAG_ALLOW_PVP = "allow-pvp"
 const val FLAG_ALLOW_BUCKET_USING = "allow-bucket-using"
-
+const val FLAG_ALLOW_EXPLOSIONS = "allow-explosions"
 const val FLAG_RESTRICT_FLOW_EFFECT = "restrict-flow-effect"
-const val FLAG_RESTRICT_FIRE_SPREAD = "restrict-fire-spread"
