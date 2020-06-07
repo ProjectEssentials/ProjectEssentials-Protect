@@ -16,19 +16,17 @@ object BucketUseHandler : ActivityHandler {
     @SubscribeEvent
     fun handle(event: FillBucketEvent) {
         if (!configuration.take().generalSettings.handleBucketUsing) return
-        if (event.entity !is ServerPlayerEntity) return
-        val player = event.entity as ServerPlayerEntity
+        val player = event.player as ServerPlayerEntity
         if (hasPermission(player, "ess.protect.bypass", 4)) return
-        with(player.position) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }?.also {
+        fun fail() = restricted(player) { ACTION_BUCKET_USING }.also { event.isCanceled = true }
+        with(event.target!!.hitVec) {
+            getLastRegionAtPos(x.toInt(), y.toInt() - 1, z.toInt(), player.currentDimensionId)
+        }?.also {
             if (
                 it.creator != player.name.string &&
                 player.name.string !in participantsAsMap(it.participants).keys &&
                 FLAG_ALLOW_BUCKET_USING !in getRegionFlags(it)
-            ) restricted(player) { ACTION_BUCKET_USING }.also { event.isCanceled = true }
-        } ?: run {
-            if (configuration.take().globalRegionSettings.restrictBucketUsing) {
-                restricted(player) { ACTION_BUCKET_USING }.also { event.isCanceled = true }
-            }
-        }
+            ) fail()
+        } ?: run { if (configuration.take().globalRegionSettings.restrictBucketUsing) fail() }
     }
 }
