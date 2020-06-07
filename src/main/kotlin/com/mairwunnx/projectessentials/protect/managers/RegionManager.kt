@@ -41,7 +41,6 @@ fun getRegionFlags(region: RegionEntity): Set<String> {
 
 fun getGlobalRegionFlags() = with(configuration.take()) {
     setOf(
-        if (globalRegionSettings.restrictFallDamage) FLAG_RESTRICT_FALL_DAMAGE else String.empty,
         if (globalRegionSettings.restrictDamage) FLAG_RESTRICT_DAMAGE else String.empty,
         if (globalRegionSettings.restrictMobGrief) FLAG_RESTRICT_MOD_GRIEF else String.empty,
         if (globalRegionSettings.restrictFlowEffect) FLAG_RESTRICT_FLOW_EFFECT else String.empty
