@@ -3,8 +3,7 @@ package com.mairwunnx.projectessentials.protect.configurations
 data class ProtectConfigurationModel(
     val generalSettings: GeneralSettings = GeneralSettings(),
     val blockInteractSettings: BlockInteractSettings = BlockInteractSettings(),
-    val globalRegionSettings: GlobalRegionSettings = GlobalRegionSettings(),
-    val experimentalSettings: ExperimentalSettings = ExperimentalSettings()
+    val globalRegionSettings: GlobalRegionSettings = GlobalRegionSettings()
 ) {
     data class GeneralSettings(
         var handleBlockBreak: Boolean = true,
@@ -27,15 +26,4 @@ data class ProtectConfigurationModel(
         var restrictFallDamage: Boolean = false,
         var restrictMobGriefing: Boolean = false
     )
-
-    data class ExperimentalSettings(
-        val _comment: String = "This experimental settings, change values this can cause unstable server work!",
-        val generalExSettings: GeneralExSettings = GeneralExSettings(),
-        val globalRegionExSettings: GlobalRegionExSettings = GlobalRegionExSettings(),
-        val flagRegionExSettings: FlagRegionExSettings = FlagRegionExSettings()
-    ) {
-        data class GeneralExSettings(val handleFireSpread: Boolean = false)
-        data class GlobalRegionExSettings(val restrictFireSpread: Boolean = false)
-        data class FlagRegionExSettings(val enableRestrictFireSpreadFlag: Boolean = false)
-    }
 }
