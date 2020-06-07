@@ -14,7 +14,8 @@ data class ProtectConfigurationModel(
         var handleEntitySpawn: Boolean = true,
         var handleEntityGrief: Boolean = true,
         var handlePlayerDamage: Boolean = true,
-        var handleFarmlandDamage: Boolean = true
+        var handleFarmlandDamage: Boolean = true,
+        var handleBucketUsing: Boolean = true
     )
 
     data class BlockInteractSettings(
