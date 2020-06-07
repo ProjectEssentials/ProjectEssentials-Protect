@@ -31,6 +31,7 @@ data class ProtectConfigurationModel(
         var restrictMobGrief: Boolean = false,
         var restrictDamage: Boolean = false,
         var restrictFarmlandDamage: Boolean = false,
-        var restrictBucketUsing: Boolean = false
+        var restrictBucketUsing: Boolean = false,
+        var restrictExplosions: Boolean = false
     )
 }
