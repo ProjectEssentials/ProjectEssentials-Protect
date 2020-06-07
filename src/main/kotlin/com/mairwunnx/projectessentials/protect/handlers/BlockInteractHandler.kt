@@ -18,6 +18,7 @@ object BlockInteractHandler : ActivityHandler {
         if (!configuration.take().generalSettings.handleBlockInteract) return
         val player = event.player as ServerPlayerEntity
         val conf = configuration.take()
+        fun fail() = restricted(player) { ACTION_BLOCK_INTERACT }.also { event.isCanceled = true }
         if (hasPermission(player, "ess.protect.bypass", 4)) return
         with(event.pos) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }.also {
             if (
@@ -27,20 +28,12 @@ object BlockInteractHandler : ActivityHandler {
             ) {
                 event.world.getBlockState(event.pos).also { state ->
                     if (state.getContainer(event.world, event.pos) != null) {
-                        if (conf.blockInteractSettings.preventInteractBlockHasContainer) {
-                            restricted(player) { ACTION_BLOCK_INTERACT }.also {
-                                event.isCanceled = true
-                            }.let { return }
-                        } else return
+                        if (conf.blockInteractSettings.preventInteractBlockHasContainer) fail().let { return } else return
                     }
                     if (state.block.stateContainer.properties.count() == 0) {
-                        if (conf.blockInteractSettings.preventInteractBlockHasZeroState) {
-                            restricted(player) { ACTION_BLOCK_INTERACT }.also {
-                                event.isCanceled = true
-                            }.let { return }
-                        } else return
+                        if (conf.blockInteractSettings.preventInteractBlockHasZeroState) fail().let { return } else return
                     }
-                    restricted(player) { ACTION_BLOCK_INTERACT }.also { event.isCanceled = true }
+                    fail()
                 }
             }
         }
