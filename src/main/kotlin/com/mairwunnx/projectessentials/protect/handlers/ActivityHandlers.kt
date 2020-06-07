@@ -7,5 +7,6 @@ val activityHandlers = listOf(
     EntityInteractHandler,
     EntitySpawnHandler,
     EntityGriefHandler,
-    PlayerDamageHandler
+    PlayerDamageHandler,
+    FarmlandDamageHandler
 )
