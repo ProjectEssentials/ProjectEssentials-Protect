@@ -9,6 +9,7 @@ const val FLAG_RESTRICT_KIND_ENTITY_SPAWN = "restrict-kind-entity-spawn"
 const val FLAG_RESTRICT_UNKIND_ENTITY_SPAWN = "restrict-unkind-entity-spawn"
 const val FLAG_RESTRICT_MOD_GRIEF = "restrict-mob-grief"
 const val FLAG_RESTRICT_DAMAGE = "restrict-damage"
+const val FLAG_ALLOW_PVP = "allow-pvp"
 
 const val FLAG_RESTRICT_FLOW_EFFECT = "restrict-flow-effect"
 const val FLAG_RESTRICT_FIRE_SPREAD = "restrict-fire-spread"

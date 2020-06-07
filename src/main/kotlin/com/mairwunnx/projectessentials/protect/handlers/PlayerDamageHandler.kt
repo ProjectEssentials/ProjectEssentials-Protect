@@ -1,6 +1,7 @@
 package com.mairwunnx.projectessentials.protect.handlers
 
 import com.mairwunnx.projectessentials.core.api.v1.extensions.currentDimensionId
+import com.mairwunnx.projectessentials.protect.FLAG_ALLOW_PVP
 import com.mairwunnx.projectessentials.protect.FLAG_RESTRICT_DAMAGE
 import com.mairwunnx.projectessentials.protect.configuration
 import com.mairwunnx.projectessentials.protect.managers.getLastRegionAtPos
@@ -19,7 +20,9 @@ object PlayerDamageHandler : ActivityHandler {
         if (event.entity !is ServerPlayerEntity) return
         val player = event.entity as ServerPlayerEntity
         with(player.position) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }?.also {
-            event.isCanceled = FLAG_RESTRICT_DAMAGE in getRegionFlags(it)
+            getRegionFlags(it).also { flags ->
+                if (FLAG_ALLOW_PVP !in flags) event.isCanceled = FLAG_RESTRICT_DAMAGE in flags
+            }
         } ?: run {
             if (configuration.take().globalRegionSettings.restrictDamage) event.isCanceled = true
         }
