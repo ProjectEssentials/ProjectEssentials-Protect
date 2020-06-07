@@ -12,7 +12,9 @@ data class ProtectConfigurationModel(
         var handleEntityInteract: Boolean = true,
         var handleEntityInteractProjectile: Boolean = true,
         var handleEntitySpawn: Boolean = true,
-        var handleEntityGrief: Boolean = true
+        var handleEntityGrief: Boolean = true,
+        var handlePlayerDamage: Boolean = true,
+        var handlePlayerDamageFall: Boolean = true
     )
 
     data class BlockInteractSettings(
