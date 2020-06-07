@@ -1,9 +1,8 @@
 package com.mairwunnx.projectessentials.protect.managers
 
-import com.mairwunnx.projectessentials.protect.ask
+import com.mairwunnx.projectessentials.core.api.v1.extensions.empty
+import com.mairwunnx.projectessentials.protect.*
 import com.mairwunnx.projectessentials.protect.dao.RegionEntity
-import com.mairwunnx.projectessentials.protect.flagsAsSet
-import com.mairwunnx.projectessentials.protect.regionsIsIntersect
 import com.mairwunnx.projectessentials.protect.structs.Position
 
 fun getAllRegions() = ask { RegionEntity.all().asSequence() }
@@ -33,7 +32,18 @@ fun getRegionFlags(region: RegionEntity): Set<String> {
                 Position(it.minX, it.minY, it.minZ)
             ) && region.dimension == it.dimension && it.priority < region.priority
         }.sortedBy { it.priority }.let {
-            return flagsAsSet(region.flags) + it.map { flagsAsSet(it.flags) }.flatten().toSet()
+            return getGlobalRegionFlags()
+                .plus(flagsAsSet(region.flags))
+                .plus(it.map { flagsAsSet(it.flags) }.flatten().toSet())
         }
     } else return flagsAsSet(region.flags)
+}
+
+fun getGlobalRegionFlags() = with(configuration.take()) {
+    setOf(
+        if (globalRegionSettings.restrictFallDamage) FLAG_RESTRICT_FALL_DAMAGE else String.empty,
+        if (globalRegionSettings.restrictMobGriefing) FLAG_RESTRICT_MOD_GRIEFING else String.empty,
+        if (globalRegionSettings.restrictFlowEffect) FLAG_RESTRICT_FLOW_EFFECT else String.empty,
+        if (experimentalSettings.globalRegionExSettings.restrictFireSpread) FLAG_RESTRICT_FIRE_SPREAD else String.empty
+    ).filter { it.isNotBlank() }.toSet()
 }
