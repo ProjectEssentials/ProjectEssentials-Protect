@@ -23,8 +23,6 @@ object PlayerDamageHandler : ActivityHandler {
             getRegionFlags(it).also { flags ->
                 if (FLAG_ALLOW_PVP !in flags) event.isCanceled = FLAG_RESTRICT_DAMAGE in flags
             }
-        } ?: run {
-            if (configuration.take().globalRegionSettings.restrictDamage) event.isCanceled = true
-        }
+        } ?: run { event.isCanceled = configuration.take().globalRegionSettings.restrictDamage }
     }
 }
