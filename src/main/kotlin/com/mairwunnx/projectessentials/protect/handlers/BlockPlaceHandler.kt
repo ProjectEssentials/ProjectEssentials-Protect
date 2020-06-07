@@ -2,12 +2,9 @@ package com.mairwunnx.projectessentials.protect.handlers
 
 import com.mairwunnx.projectessentials.core.api.v1.extensions.currentDimensionId
 import com.mairwunnx.projectessentials.core.api.v1.permissions.hasPermission
-import com.mairwunnx.projectessentials.protect.ACTION_BLOCK_PLACE
-import com.mairwunnx.projectessentials.protect.FLAG_ALLOW_BLOCK_PLACE
+import com.mairwunnx.projectessentials.protect.*
 import com.mairwunnx.projectessentials.protect.managers.getLastRegionAtPos
 import com.mairwunnx.projectessentials.protect.managers.getRegionFlags
-import com.mairwunnx.projectessentials.protect.participantsAsMap
-import com.mairwunnx.projectessentials.protect.restricted
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.common.MinecraftForge.EVENT_BUS
 import net.minecraftforge.event.world.BlockEvent
@@ -18,6 +15,7 @@ object BlockPlaceHandler : ActivityHandler {
 
     @SubscribeEvent
     fun handle(event: BlockEvent.EntityPlaceEvent) {
+        if (!configuration.take().generalSettings.handleBlockPlace) return
         if (event.entity !is ServerPlayerEntity) return
         val player = event.entity as ServerPlayerEntity
         if (hasPermission(player, "ess.protect.bypass", 4)) return
@@ -27,6 +25,10 @@ object BlockPlaceHandler : ActivityHandler {
                 player.name.string !in participantsAsMap(it.participants).keys &&
                 FLAG_ALLOW_BLOCK_PLACE !in getRegionFlags(it)
             ) restricted(player) { ACTION_BLOCK_PLACE }.also { event.isCanceled = true }
+        } ?: run {
+            if (configuration.take().globalRegionSettings.restrictBlockPlace) {
+                restricted(player) { ACTION_BLOCK_PLACE }.also { event.isCanceled = true }
+            }
         }
     }
 }
