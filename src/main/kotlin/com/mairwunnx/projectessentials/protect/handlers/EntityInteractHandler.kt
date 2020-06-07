@@ -19,7 +19,6 @@ object EntityInteractHandler : ActivityHandler {
     fun handle(event: PlayerInteractEvent.EntityInteract) {
         if (!configuration.take().generalSettings.handleEntityInteract) return
         val player = event.player as ServerPlayerEntity
-        val conf = configuration.take()
         if (hasPermission(player, "ess.protect.bypass", 4)) return
         with(event.pos) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }.also {
             if (
@@ -36,7 +35,7 @@ object EntityInteractHandler : ActivityHandler {
             !configuration.take().generalSettings.handleEntityInteract ||
             !configuration.take().generalSettings.handleEntityInteractProjectile
         ) return
-        
+
         if (event.entity is ServerPlayerEntity) {
             val player = event.entity as ServerPlayerEntity
             if (hasPermission(player, "ess.protect.bypass", 4)) return
