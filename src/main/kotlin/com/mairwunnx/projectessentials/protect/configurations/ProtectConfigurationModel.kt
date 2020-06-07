@@ -16,7 +16,8 @@ data class ProtectConfigurationModel(
         var handlePlayerDamage: Boolean = true,
         var handleFarmlandDamage: Boolean = true,
         var handleBucketUsing: Boolean = true,
-        var handleExplosions: Boolean = true
+        var handleExplosions: Boolean = true,
+        val defaultRegionFlags: Set<String> = setOf()
     )
 
     data class BlockInteractSettings(
