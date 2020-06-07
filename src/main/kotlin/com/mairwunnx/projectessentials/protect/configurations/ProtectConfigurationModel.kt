@@ -17,7 +17,7 @@ data class ProtectConfigurationModel(
 
     data class BlockInteractSettings(
         var preventInteractBlockHasContainer: Boolean = true,
-        var preventInteractBlockHasZeroState: Boolean = false
+        var preventInteractBlockHasZeroState: Boolean = true
     )
 
     data class GlobalRegionSettings(
