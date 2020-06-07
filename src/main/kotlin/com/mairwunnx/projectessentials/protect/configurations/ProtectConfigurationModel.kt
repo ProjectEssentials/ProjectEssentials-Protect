@@ -26,7 +26,8 @@ data class ProtectConfigurationModel(
         var restrictBlockBreak: Boolean = false,
         var restrictBlockPlace: Boolean = false,
         var restrictFlowEffect: Boolean = false,
+        var restrictMobGrief: Boolean = false,
         var restrictFallDamage: Boolean = false,
-        var restrictMobGrief: Boolean = false
+        var restrictDamage: Boolean = false
     )
 }
