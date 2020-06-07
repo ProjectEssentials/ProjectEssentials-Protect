@@ -11,7 +11,8 @@ data class ProtectConfigurationModel(
         var handleBlockInteract: Boolean = true,
         var handleEntityInteract: Boolean = true,
         var handleEntityInteractProjectile: Boolean = true,
-        var handleEntitySpawn: Boolean = true
+        var handleEntitySpawn: Boolean = true,
+        var handleEntityGrief: Boolean = true
     )
 
     data class BlockInteractSettings(
@@ -24,6 +25,6 @@ data class ProtectConfigurationModel(
         var restrictBlockPlace: Boolean = false,
         var restrictFlowEffect: Boolean = false,
         var restrictFallDamage: Boolean = false,
-        var restrictMobGriefing: Boolean = false
+        var restrictMobGrief: Boolean = false
     )
 }
