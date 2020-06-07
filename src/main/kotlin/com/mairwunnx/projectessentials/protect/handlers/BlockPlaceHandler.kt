@@ -1,6 +1,5 @@
 package com.mairwunnx.projectessentials.protect.handlers
 
-import com.mairwunnx.projectessentials.core.api.v1.extensions.currentDimensionId
 import com.mairwunnx.projectessentials.core.api.v1.permissions.hasPermission
 import com.mairwunnx.projectessentials.protect.*
 import com.mairwunnx.projectessentials.protect.managers.getLastRegionAtPos
@@ -16,19 +15,31 @@ object BlockPlaceHandler : ActivityHandler {
     @SubscribeEvent
     fun handle(event: BlockEvent.EntityPlaceEvent) {
         if (!configuration.take().generalSettings.handleBlockPlace) return
-        if (event.entity !is ServerPlayerEntity) return
-        val player = event.entity as ServerPlayerEntity
-        if (hasPermission(player, "ess.protect.bypass", 4)) return
-        with(event.pos) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }.also {
-            if (
-                it != null && it.creator != player.name.string &&
-                player.name.string !in participantsAsMap(it.participants).keys &&
-                FLAG_ALLOW_BLOCK_PLACE !in getRegionFlags(it)
-            ) restricted(player) { ACTION_BLOCK_PLACE }.also { event.isCanceled = true }
+
+        fun fail(player: ServerPlayerEntity) =
+            restricted(player) { ACTION_BLOCK_PLACE }.also { event.isCanceled = true }
+
+        if (event.entity is ServerPlayerEntity) {
+            val player = event.entity as ServerPlayerEntity
+            if (hasPermission(player, "ess.protect.bypass", 4)) return
+        }
+        
+        with(event.pos) { getLastRegionAtPos(x, y, z, event.blockSnapshot.dimId) }?.also {
+            if (event.entity is ServerPlayerEntity) {
+                with(event.entity as ServerPlayerEntity) {
+                    if (
+                        it.creator != name.string &&
+                        name.string !in participantsAsMap(it.participants).keys &&
+                        FLAG_ALLOW_BLOCK_PLACE !in getRegionFlags(it)
+                    ) fail(this)
+                }
+            } else if (FLAG_ALLOW_BLOCK_PLACE !in getRegionFlags(it)) event.isCanceled = true
         } ?: run {
             if (configuration.take().globalRegionSettings.restrictBlockPlace) {
-                restricted(player) { ACTION_BLOCK_PLACE }.also { event.isCanceled = true }
-            }
+                if (event.entity is ServerPlayerEntity) {
+                    with(event.entity as ServerPlayerEntity) { fail(this) }
+                }
+            } else event.isCanceled = true
         }
     }
 }
