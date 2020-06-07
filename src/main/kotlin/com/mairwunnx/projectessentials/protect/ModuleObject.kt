@@ -47,13 +47,6 @@ class ModuleObject : IModule {
     }
 
     @SubscribeEvent
-    public fun onBlockBreak(event: BlockEvent.BreakEvent) {
-        BlockVector3.at(event.pos.x, event.pos.y, event.pos.z).containedWithin(
-            min, max
-        ).also { event.isCanceled = it }
-    }
-
-    @SubscribeEvent
     fun onPlayerCommand(event: CommandEvent) {
         if (event.isPlayerSender()) {
             if (event.commandName == "test1") {
