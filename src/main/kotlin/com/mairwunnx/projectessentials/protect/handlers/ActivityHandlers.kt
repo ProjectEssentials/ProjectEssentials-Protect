@@ -10,5 +10,6 @@ val activityHandlers = listOf(
     PlayerDamageHandler,
     FarmlandDamageHandler,
     BucketUseHandler,
-    ExplosionHandler
+    ExplosionHandler,
+    FlowEffectsHandler
 )
