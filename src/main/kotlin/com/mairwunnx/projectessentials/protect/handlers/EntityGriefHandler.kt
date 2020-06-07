@@ -20,8 +20,6 @@ object EntityGriefHandler : ActivityHandler {
             if (FLAG_RESTRICT_MOD_GRIEF in getRegionFlags(it)) {
                 { event.isCanceled = true }.let { return }
             }
-        } ?: run {
-            if (configuration.take().globalRegionSettings.restrictMobGrief) event.isCanceled = true
-        }
+        } ?: run { event.isCanceled = configuration.take().globalRegionSettings.restrictMobGrief }
     }
 }
