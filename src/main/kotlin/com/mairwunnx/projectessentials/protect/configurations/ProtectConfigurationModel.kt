@@ -9,7 +9,9 @@ data class ProtectConfigurationModel(
     data class GeneralSettings(
         var handleBlockBreak: Boolean = true,
         var handleBlockPlace: Boolean = true,
-        var handleBlockInteract: Boolean = true
+        var handleBlockInteract: Boolean = true,
+        var handleEntityInteract: Boolean = true,
+        var handleEntityInteractProjectile: Boolean = true
     )
 
     data class BlockInteractSettings(
