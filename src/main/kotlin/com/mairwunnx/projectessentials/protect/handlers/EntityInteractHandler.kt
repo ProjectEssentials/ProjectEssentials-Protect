@@ -20,9 +20,9 @@ object EntityInteractHandler : ActivityHandler {
         if (!configuration.take().generalSettings.handleEntityInteract) return
         val player = event.player as ServerPlayerEntity
         if (hasPermission(player, "ess.protect.bypass", 4)) return
-        with(event.pos) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }.also {
+        with(event.pos) { getLastRegionAtPos(x, y, z, player.currentDimensionId) }?.also {
             if (
-                it != null && it.creator != player.name.string &&
+                it.creator != player.name.string &&
                 player.name.string !in participantsAsMap(it.participants).keys &&
                 FLAG_ALLOW_ENTITY_INTERACT !in getRegionFlags(it)
             ) restricted(player) { ACTION_ENTITY_INTERACT }.also { event.isCanceled = true }
@@ -43,14 +43,18 @@ object EntityInteractHandler : ActivityHandler {
 
         with(event.rayTraceResult.hitVec) {
             getLastRegionAtPos(x.toInt(), y.toInt(), z.toInt(), event.entity.dimension.id)
-        }.also {
-            if (event.rayTraceResult.type == RayTraceResult.Type.ENTITY) {
-                if (event.entity is ServerPlayerEntity) {
-                    restricted(event.entity as ServerPlayerEntity) { ACTION_ENTITY_INTERACT }.also {
-                        event.isCanceled = true
-                    }
-                } else event.isCanceled = true
-            }
+        }?.also {
+            if (event.entity is ServerPlayerEntity) {
+                val player = event.entity as ServerPlayerEntity
+                if (
+                    it.creator != player.name.string &&
+                    player.name.string !in participantsAsMap(it.participants).keys &&
+                    FLAG_ALLOW_ENTITY_INTERACT !in getRegionFlags(it) &&
+                    event.rayTraceResult.type == RayTraceResult.Type.ENTITY
+                ) restricted(event.entity as ServerPlayerEntity) { ACTION_ENTITY_INTERACT }.also {
+                    event.isCanceled = true
+                }
+            } else if (FLAG_ALLOW_ENTITY_INTERACT !in getRegionFlags(it)) event.isCanceled = true
         }
     }
 }
